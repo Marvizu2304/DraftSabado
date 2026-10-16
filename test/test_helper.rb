@@ -13,3 +13,14 @@ module ActiveSupport
     # Add more helper methods to be used by all tests here...
   end
 end
+
+class ActionDispatch::IntegrationTest
+  # The props Inertia handed the page, read back out of the rendered layout.
+  def inertia_props
+    JSON.parse(CGI.unescapeHTML(response.body[/data-page="([^"]*)"/, 1]))["props"]
+  end
+
+  def log_in_as(user)
+    post login_path, params: { email: user.email, password: "password" }
+  end
+end
