@@ -1,0 +1,16 @@
+memo:
+  name: Memo
+  age: 31
+  position: goalkeeper
+
+beto:
+  name: Beto
+  age: 27
+  position: midfielder
+  user: one
+
+retirado:
+  name: Retirado
+  age: 48
+  position: defender
+  active: false

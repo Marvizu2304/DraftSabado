@@ -21,6 +21,12 @@ module Authentication
       resume_session || request_authentication
     end
 
+    def require_admin
+      unless Current.user&.admin?
+        redirect_to root_path, alert: "You don't have access to that page."
+      end
+    end
+
     def resume_session
       Current.session ||= find_session_by_cookie
     end
@@ -39,7 +45,7 @@ module Authentication
     end
 
     def after_authentication_url
-      session.delete(:return_to_after_authenticating) || dashboard_url
+      session.delete(:return_to_after_authenticating) || matchdays_url
     end
 
     def start_new_session_for(user)

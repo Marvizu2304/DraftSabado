@@ -10,9 +10,75 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_04_23_000005) do
+ActiveRecord::Schema[8.0].define(version: 2026_10_17_120007) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "attendances", force: :cascade do |t|
+    t.bigint "matchday_id", null: false
+    t.bigint "player_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["matchday_id", "player_id"], name: "index_attendances_on_matchday_id_and_player_id", unique: true
+    t.index ["matchday_id"], name: "index_attendances_on_matchday_id"
+    t.index ["player_id"], name: "index_attendances_on_player_id"
+  end
+
+  create_table "group_settings", force: :cascade do |t|
+    t.integer "technique_weight", default: 60, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "elo_strength", default: 10, null: false
+  end
+
+  create_table "matchdays", force: :cascade do |t|
+    t.date "played_on", null: false
+    t.integer "team_count", default: 2, null: false
+    t.string "status", default: "building", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "ratings_open_at"
+    t.datetime "ratings_settled_at"
+    t.index ["played_on"], name: "index_matchdays_on_played_on", unique: true
+  end
+
+  create_table "players", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "age", null: false
+    t.string "position", null: false
+    t.boolean "active", default: true, null: false
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "elo", precision: 5, scale: 3, default: "0.0", null: false
+    t.index ["user_id"], name: "index_players_on_user_id", unique: true
+  end
+
+  create_table "ratings", force: :cascade do |t|
+    t.bigint "rater_id", null: false
+    t.bigint "player_id", null: false
+    t.integer "technique", null: false
+    t.integer "physical", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "matchday_id"
+    t.index ["matchday_id"], name: "index_ratings_on_matchday_id"
+    t.index ["player_id"], name: "index_ratings_on_player_id"
+    t.index ["rater_id", "player_id"], name: "index_ratings_on_rater_id_and_player_id", unique: true
+    t.index ["rater_id"], name: "index_ratings_on_rater_id"
+  end
+
+  create_table "score_snapshots", force: :cascade do |t|
+    t.bigint "player_id", null: false
+    t.bigint "matchday_id", null: false
+    t.decimal "overall", precision: 4, scale: 2
+    t.decimal "elo", precision: 5, scale: 3, default: "0.0", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["matchday_id"], name: "index_score_snapshots_on_matchday_id"
+    t.index ["player_id", "matchday_id"], name: "index_score_snapshots_on_player_id_and_matchday_id", unique: true
+    t.index ["player_id"], name: "index_score_snapshots_on_player_id"
+  end
 
   create_table "sessions", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -165,6 +231,28 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_23_000005) do
     t.index ["key"], name: "index_solid_queue_semaphores_on_key", unique: true
   end
 
+  create_table "team_memberships", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.bigint "player_id", null: false
+    t.string "position", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["player_id"], name: "index_team_memberships_on_player_id"
+    t.index ["team_id", "player_id"], name: "index_team_memberships_on_team_id_and_player_id", unique: true
+    t.index ["team_id"], name: "index_team_memberships_on_team_id"
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.bigint "matchday_id", null: false
+    t.string "color", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "goals"
+    t.integer "wins"
+    t.index ["matchday_id", "color"], name: "index_teams_on_matchday_id_and_color", unique: true
+    t.index ["matchday_id"], name: "index_teams_on_matchday_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "password_digest", null: false
@@ -175,6 +263,14 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_23_000005) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "attendances", "matchdays"
+  add_foreign_key "attendances", "players"
+  add_foreign_key "players", "users"
+  add_foreign_key "ratings", "matchdays"
+  add_foreign_key "ratings", "players"
+  add_foreign_key "ratings", "users", column: "rater_id"
+  add_foreign_key "score_snapshots", "matchdays"
+  add_foreign_key "score_snapshots", "players"
   add_foreign_key "sessions", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
@@ -182,4 +278,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_23_000005) do
   add_foreign_key "solid_queue_ready_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_recurring_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
+  add_foreign_key "team_memberships", "players"
+  add_foreign_key "team_memberships", "teams"
+  add_foreign_key "teams", "matchdays"
 end

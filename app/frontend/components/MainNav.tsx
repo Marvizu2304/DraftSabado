@@ -1,14 +1,17 @@
 import * as React from "react"
 import { Link, router, usePage } from "@inertiajs/react"
 import {
+  CalendarDays,
   ChevronsLeft,
   ChevronsRight,
-  Home,
   LogOut,
   Menu,
   Settings,
   Shield,
+  Star,
+  TrendingUp,
   User,
+  Users,
   X,
 } from "lucide-react"
 import {
@@ -24,7 +27,7 @@ import { cn } from "@/lib/utils"
 import type { PageProps } from "@/types/inertia"
 
 const STORAGE_KEY = "main-nav-open"
-const BRAND = "Build New"
+const BRAND = "DraftSabado"
 
 export type NavItemDef = {
   href: string
@@ -35,10 +38,28 @@ export type NavItemDef = {
 
 const DEFAULT_NAV_ITEMS: NavItemDef[] = [
   {
-    href: "/dashboard",
-    icon: Home,
-    label: "Home",
-    match: (url) => url === "/" || url.startsWith("/dashboard"),
+    href: "/sabados",
+    icon: CalendarDays,
+    label: "Sábados",
+    match: (url) => url === "/" || url.startsWith("/sabados"),
+  },
+  {
+    href: "/plantel",
+    icon: Users,
+    label: "Plantel",
+    match: (url) => url.startsWith("/plantel"),
+  },
+  {
+    href: "/calificar",
+    icon: Star,
+    label: "Calificar",
+    match: (url) => url.startsWith("/calificar"),
+  },
+  {
+    href: "/evolucion",
+    icon: TrendingUp,
+    label: "Evolución",
+    match: (url) => url.startsWith("/evolucion"),
   },
 ]
 
@@ -58,7 +79,7 @@ function useMainNavOpen() {
 
 export function MainNav({
   items = DEFAULT_NAV_ITEMS,
-  brandHref = "/dashboard",
+  brandHref = "/sabados",
 }: {
   items?: NavItemDef[]
   brandHref?: string
