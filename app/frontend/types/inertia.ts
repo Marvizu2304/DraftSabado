@@ -7,8 +7,15 @@ export type CurrentUser = {
   admin: boolean
 } | null
 
+/** The nudge while a Saturday's twelve-hour rating window is open. */
+export type RatingPrompt = {
+  pending: number
+  closes_at: string
+} | null
+
 export type SharedProps = {
   current_user: CurrentUser
+  rating_prompt: RatingPrompt
   flash: {
     notice: string | null
     alert: string | null
