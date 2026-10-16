@@ -1,0 +1,25 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "draftsabado",
+      "runtimeExecutable": "bin/dev",
+      "runtimeArgs": [],
+      "port": 3000
+    },
+    {
+      "name": "draftsabado-verify",
+      "runtimeExecutable": "mise",
+      "runtimeArgs": [
+        "exec",
+        "--",
+        "env",
+        "PORT=4000",
+        "VITE_RUBY_PORT=4036",
+        "PIDFILE=tmp/pids/server-4000.pid",
+        "bin/dev"
+      ],
+      "port": 4000
+    }
+  ]
+}
