@@ -28,6 +28,16 @@
   --color-danger: oklch(64% 0.22 25);
   --color-danger-faded: oklch(96% 0.025 25);
   --color-danger-display: oklch(55% 0.20 25);
+
+  /* Jersey colors: what the teams actually wear on the field, so they stay put
+     in both themes instead of flipping with the ink tokens. The list is also
+     what caps how many teams a Saturday can be split into. */
+  --color-jersey-black: #18181b;
+  --color-jersey-white: #fafafa;
+  --color-jersey-orange: #f97316;
+  --color-jersey-blue: #2563eb;
+  --color-jersey-red: #dc2626;
+  --color-jersey-green: #16a34a;
 }
 
 .dark {
@@ -200,6 +210,7 @@
   .badge-neutral { @apply bg-surface text-ink-body border border-hairline; }
   .badge-accent  { @apply bg-accent-faded text-accent-display; }
   .badge-signal  { @apply bg-signal-faded text-signal-display; }
+  .badge-danger  { @apply bg-danger-faded text-danger-display; }
   .badge-muted   { @apply bg-transparent text-ink-muted border border-hairline; }
   .badge-solid   { @apply bg-accent text-page; }
 

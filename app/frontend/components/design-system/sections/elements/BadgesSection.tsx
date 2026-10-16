@@ -6,6 +6,7 @@ const code = `import { Badge } from "@/components/ui/badge";
 <Badge tone="neutral">Draft</Badge>
 <Badge tone="accent">New</Badge>
 <Badge tone="signal">Warning</Badge>
+<Badge tone="danger">Failed</Badge>
 <Badge tone="muted">Archived</Badge>
 <Badge tone="solid">Pro</Badge>`;
 
@@ -16,7 +17,7 @@ export function BadgesSection() {
       title="Badges"
       description={
         <>
-          Small inline tag/badge for status or category. Five tones cover most
+          Small inline tag/badge for status or category. Six tones cover most
           needs. Always use the primitive — never reach for ad-hoc pill
           markup.
         </>
@@ -39,6 +40,7 @@ export function BadgesSection() {
           <Badge tone="neutral">Draft</Badge>
           <Badge tone="accent">New</Badge>
           <Badge tone="signal">Warning</Badge>
+          <Badge tone="danger">Failed</Badge>
           <Badge tone="muted">Archived</Badge>
           <Badge tone="solid">Pro</Badge>
         </div>
@@ -46,7 +48,7 @@ export function BadgesSection() {
       code={code}
       options={
         <ul className="list-disc pl-5">
-          <li><code>tone</code>: <code>neutral</code> (default) | <code>accent</code> | <code>signal</code> | <code>muted</code> | <code>solid</code></li>
+          <li><code>tone</code>: <code>neutral</code> (default) | <code>accent</code> | <code>signal</code> | <code>danger</code> | <code>muted</code> | <code>solid</code></li>
           <li>Pair with a small lucide icon as the first child for richer status badges.</li>
         </ul>
       }

@@ -1,6 +1,11 @@
 import { SectionShell } from "@/components/design-system/SectionShell";
 import { ColorSwatch } from "@/components/design-system/ColorSwatch";
-import { SURFACES, TEXT, SPLASH } from "@/components/design-system/palette";
+import {
+  SURFACES,
+  TEXT,
+  SPLASH,
+  JERSEYS,
+} from "@/components/design-system/palette";
 
 const code = `<div className="bg-page text-ink-body">
   <div className="bg-surface border border-hairline">
@@ -17,10 +22,10 @@ export function ColorsSection() {
       title="Colors"
       description={
         <>
-          Ten semantic tokens, each defined for light and dark mode. Use the
-          token names — never raw hex. Each swatch shows the value for the
-          mode you're currently viewing; both hex codes are listed below the
-          swatch and click-to-copy.
+          Semantic tokens, each defined for light and dark mode, plus a
+          fixed jersey palette. Use the token names — never raw hex. Each
+          swatch shows the value for the mode you're currently viewing; both
+          hex codes are listed below the swatch and click-to-copy.
         </>
       }
       whenToUse={
@@ -33,6 +38,10 @@ export function ColorsSection() {
           <li>
             Use <code>ink-display</code> for headlines and emphasized
             content.
+          </li>
+          <li>
+            Use a <code>jersey-*</code> token only for the shirt color of a
+            Saturday's team.
           </li>
         </ul>
       }
@@ -75,6 +84,24 @@ export function ColorsSection() {
             </h3>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
               {SPLASH.map((c) => (
+                <ColorSwatch key={c.name} {...c} />
+              ))}
+            </div>
+          </div>
+          <div>
+            <h3 className="mb-3 text-sm font-semibold text-ink-display">
+              Jerseys
+            </h3>
+            <p className="mb-3 text-sm text-ink-muted">
+              Shirt colors, identical in both themes — a jersey doesn't change
+              color when the theme does — and this list is what caps how many
+              teams a Saturday can be split into. Pair{" "}
+              <code>bg-jersey-black</code> and <code>bg-jersey-white</code>{" "}
+              with <code>border border-hairline</code> so they stay visible
+              against either background.
+            </p>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+              {JERSEYS.map((c) => (
                 <ColorSwatch key={c.name} {...c} />
               ))}
             </div>

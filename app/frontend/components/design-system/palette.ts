@@ -104,6 +104,45 @@ export const SPLASH: PaletteEntry[] = [
   },
 ];
 
+export const JERSEYS: PaletteEntry[] = [
+  {
+    name: "jersey-black",
+    utility: "bg-jersey-black",
+    hexLight: "#18181b",
+    hexDark: "#18181b",
+  },
+  {
+    name: "jersey-white",
+    utility: "bg-jersey-white",
+    hexLight: "#fafafa",
+    hexDark: "#fafafa",
+  },
+  {
+    name: "jersey-orange",
+    utility: "bg-jersey-orange",
+    hexLight: "#f97316",
+    hexDark: "#f97316",
+  },
+  {
+    name: "jersey-blue",
+    utility: "bg-jersey-blue",
+    hexLight: "#2563eb",
+    hexDark: "#2563eb",
+  },
+  {
+    name: "jersey-red",
+    utility: "bg-jersey-red",
+    hexLight: "#dc2626",
+    hexDark: "#dc2626",
+  },
+  {
+    name: "jersey-green",
+    utility: "bg-jersey-green",
+    hexLight: "#16a34a",
+    hexDark: "#16a34a",
+  },
+];
+
 export const FONTS = {
   display: "Stack Sans Text",
   body: "DM Sans",

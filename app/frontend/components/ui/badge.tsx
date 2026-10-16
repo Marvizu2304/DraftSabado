@@ -9,6 +9,7 @@ const badgeVariants = cva("badge", {
       neutral: "badge-neutral",
       accent: "badge-accent",
       signal: "badge-signal",
+      danger: "badge-danger",
       muted: "badge-muted",
       solid: "badge-solid",
     },
