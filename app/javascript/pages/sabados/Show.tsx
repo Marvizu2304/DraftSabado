@@ -43,7 +43,7 @@ import {
 import type { PageProps } from "@/types/inertia"
 
 const DESCRIPTION =
-  "El sábado en la cancha: palomea quién llegó, arma equipos parejos, ajústalos a mano y compártelos."
+  "La reta en la cancha: palomea quién llegó, arma equipos parejos, ajústalos a mano y compártelos."
 
 /** Where the Saturday is still being put together. The date is step one and
  *  lives in the dialog that opened it. */
@@ -221,8 +221,8 @@ export default function SabadoShow({
 
   function discard() {
     const warning = scored
-      ? "Borrar este sábado también lo saca del elo de todos. ¿Seguir?"
-      : "¿Descartar este sábado? Se pierde lo armado."
+      ? "Borrar esta reta también la saca del elo de todos. ¿Seguir?"
+      : "¿Descartar esta reta? Se pierde lo armado."
     if (!window.confirm(warning)) return
     router.delete(`/sabados/${matchday.id}`)
   }
@@ -251,7 +251,7 @@ export default function SabadoShow({
     <>
       <Head title={capitalize(title)}>
         <meta name="description" content={DESCRIPTION} />
-        <meta property="og:title" content="El sábado" />
+        <meta property="og:title" content="La reta" />
         <meta property="og:description" content={DESCRIPTION} />
       </Head>
       <AppShell>
@@ -259,7 +259,7 @@ export default function SabadoShow({
           href="/sabados"
           className="mb-4 inline-flex items-center gap-1 text-sm text-ink-muted no-underline hover:text-ink-display"
         >
-          <ArrowLeft className="h-4 w-4" /> Sábados
+          <ArrowLeft className="h-4 w-4" /> Retas
         </Link>
 
         <PageHeader
@@ -324,7 +324,7 @@ export default function SabadoShow({
             )}
 
             <Button className="mt-10" variant="ghost" onClick={discard}>
-              <Trash2 className="h-4 w-4" /> Descartar sábado
+              <Trash2 className="h-4 w-4" /> Descartar reta
             </Button>
           </>
         ) : arrangement.length === 0 ? (
@@ -433,7 +433,7 @@ function Roster({ roster, checked }: { roster: RosterPlayer[]; checked: number[]
   return (
     <div className="mt-6">
       {present.length === 0 ? (
-        <p className="text-ink-muted">Todavía nadie palomea este sábado.</p>
+        <p className="text-ink-muted">Todavía nadie palomea esta reta.</p>
       ) : (
         <>
           <p>Llegaron {present.length}.</p>
@@ -716,7 +716,7 @@ function Teams({
                   Atrás
                 </Button>
                 <Button className="flex-1" onClick={onConfirm}>
-                  Confirmar sábado
+                  Confirmar reta
                 </Button>
               </div>
             )}
@@ -769,7 +769,7 @@ function Manage({
           </Button>
         )}
         <Button variant="ghost" onClick={onDelete}>
-          <Trash2 className="h-4 w-4" /> Borrar sábado
+          <Trash2 className="h-4 w-4" /> Borrar reta
         </Button>
       </div>
 
@@ -785,7 +785,7 @@ function Manage({
             <DialogHeader>
               <DialogTitle>Cambiar fecha</DialogTitle>
               <DialogDescription>
-                Solo puede haber un sábado por fecha.
+                Solo puede haber una reta por fecha.
               </DialogDescription>
             </DialogHeader>
 
@@ -828,7 +828,7 @@ function Ratings({ ratings }: { ratings: RatingsInfo }) {
           ellos.
         </p>
       ) : (
-        <p className="mt-1 text-sm text-ink-muted">Cerradas. Este sábado ya quedó.</p>
+        <p className="mt-1 text-sm text-ink-muted">Cerradas. Esta reta ya quedó.</p>
       )}
 
       {ratings.pending.length > 0 ? (
@@ -942,7 +942,7 @@ function Result({
           </div>
           <p className="mt-3 text-xs text-ink-muted">
             {scored
-              ? "Borrarlo también cierra las calificaciones y deshace el elo de este sábado."
+              ? "Borrarla también cierra las calificaciones y deshace el elo de esta reta."
               : "Al guardarlo se abren las calificaciones por 12 horas."}
           </p>
         </>

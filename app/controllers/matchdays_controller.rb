@@ -29,7 +29,7 @@ class MatchdaysController < ApplicationController
     played_on = params[:played_on].presence || Date.current
 
     if (existing = Matchday.find_by(played_on: played_on))
-      return redirect_to matchday_path(existing), notice: "Ese sábado ya estaba abierto."
+      return redirect_to matchday_path(existing), notice: "Esa reta ya estaba abierta."
     end
 
     matchday = Matchday.new(played_on: played_on)
@@ -46,7 +46,7 @@ class MatchdaysController < ApplicationController
       redirect_to matchday_path(@matchday), notice: "Fecha actualizada."
     else
       redirect_to matchday_path(@matchday),
-        alert: params[:played_on].blank? ? "Falta la fecha." : "Ya hay un sábado en esa fecha."
+        alert: params[:played_on].blank? ? "Falta la fecha." : "Ya hay una reta en esa fecha."
     end
   end
 
@@ -57,7 +57,7 @@ class MatchdaysController < ApplicationController
     @matchday.destroy!
     EloLadder.recalculate! if scored
 
-    redirect_to matchdays_path, notice: "Sábado borrado."
+    redirect_to matchdays_path, notice: "Reta borrada."
   end
 
   # Reopening the window by hand, or shutting it early.
@@ -123,7 +123,7 @@ class MatchdaysController < ApplicationController
       EloLadder.recalculate! if @matchday.result?
     end
 
-    redirect_to matchday_path(@matchday), notice: "Sábado confirmado."
+    redirect_to matchday_path(@matchday), notice: "Reta confirmada."
   end
 
   # Goals with two teams, matches won with three or more. Blank fields clear the result,

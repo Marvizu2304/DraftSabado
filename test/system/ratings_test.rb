@@ -59,7 +59,7 @@ class RatingsTest < ApplicationSystemTestCase
       fill_in "Email", with: user.email
       fill_in "Password", with: "password"
       click_on "Log in"
-      assert_text "Sábados"
+      assert_text "Retas"
     end
 
     # A Saturday Beto played, already scored, so its rating window is running.

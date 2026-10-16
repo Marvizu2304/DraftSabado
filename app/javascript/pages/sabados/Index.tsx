@@ -26,7 +26,7 @@ import {
 import type { PageProps } from "@/types/inertia"
 
 const DESCRIPTION =
-  "Los sábados del grupo: quiénes llegaron, cómo quedaron los equipos y el reparto de cada jornada."
+  "Las retas del grupo: quiénes llegaron, cómo quedaron los equipos y el reparto de cada jornada."
 
 export default function SabadosIndex({ matchdays }: { matchdays: Matchday[] }) {
   const { props } = usePage<PageProps>()
@@ -35,20 +35,20 @@ export default function SabadosIndex({ matchdays }: { matchdays: Matchday[] }) {
 
   return (
     <>
-      <Head title="Sábados">
+      <Head title="Retas">
         <meta name="description" content={DESCRIPTION} />
-        <meta property="og:title" content="Sábados" />
+        <meta property="og:title" content="Retas" />
         <meta property="og:description" content={DESCRIPTION} />
       </Head>
       <AppShell>
         <PageHeader
-          title="Sábados"
+          title="Retas"
           description="Abre la jornada del día, palomea quién llegó y arma los equipos."
           actions={
             isAdmin && (
               <Button onClick={() => setOpening(true)}>
                 <CalendarPlus className="h-4 w-4" />
-                Nuevo sábado
+                Nueva reta
               </Button>
             )
           }
@@ -65,8 +65,8 @@ export default function SabadosIndex({ matchdays }: { matchdays: Matchday[] }) {
 
         {matchdays.length === 0 ? (
           <p className="mt-10 text-center text-ink-muted">
-            Todavía no hay ningún sábado.
-            {isAdmin && " Toca «Nuevo sábado» cuando estés en la cancha."}
+            Todavía no hay ninguna reta.
+            {isAdmin && " Toca «Nueva reta» cuando estés en la cancha."}
           </p>
         ) : (
           <ul className="mt-6 divide-y divide-hairline overflow-hidden rounded-md border border-hairline bg-page">
@@ -131,7 +131,7 @@ function NewMatchdayDialog({
       <DialogContent size="sm">
         <form onSubmit={submit}>
           <DialogHeader>
-            <DialogTitle>Nuevo sábado</DialogTitle>
+            <DialogTitle>Nueva reta</DialogTitle>
             <DialogDescription>
               La fecha de la jornada. Viene puesto el sábado más próximo.
             </DialogDescription>
@@ -153,7 +153,7 @@ function NewMatchdayDialog({
             <Button type="button" variant="secondary" onClick={() => onOpenChange(false)}>
               Cancelar
             </Button>
-            <Button type="submit">Abrir sábado</Button>
+            <Button type="submit">Abrir reta</Button>
           </DialogFooter>
         </form>
       </DialogContent>

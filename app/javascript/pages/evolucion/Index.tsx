@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 import { RANGES, toChartPoints, withinRange, type RangeValue, type SeriesPoint } from "./range"
 
 const DESCRIPTION =
-  "Cómo ha cambiado la puntuación del grupo sábado a sábado: compara a varios jugadores en una sola gráfica."
+  "Cómo ha cambiado la puntuación del grupo reta a reta: compara a varios jugadores en una sola gráfica."
 
 // Past six the hues repeat and no line can be told from another.
 const MAX_SELECTED = 6
@@ -63,7 +63,7 @@ export default function EvolucionIndex({ players }: { players: Player[] }) {
 
         {withHistory.length === 0 ? (
           <p className="mt-10 text-center text-ink-muted">
-            Todavía no hay sábados con resultado. En cuanto se capture el primero, aquí aparece la
+            Todavía no hay retas con resultado. En cuanto se capture el primero, aquí aparece la
             evolución del grupo.
           </p>
         ) : (

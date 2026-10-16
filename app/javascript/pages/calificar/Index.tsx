@@ -124,14 +124,14 @@ export default function Calificar({
           </p>
         ) : open && !eligible ? (
           <p className="mt-10 text-center text-ink-muted">
-            Las calificaciones de este sábado son solo para quienes jugaron, y tú no
+            Las calificaciones de esta reta son solo para quienes jugaron, y tú no
             apareces en la lista de asistencia.
           </p>
         ) : players.length === 0 ? (
           <p className="mt-10 text-center text-ink-muted">
             {open
-              ? "No hay nadie más a quién calificar de ese sábado."
-              : "No hay calificaciones abiertas. Se abren al guardar el resultado de un sábado y duran 12 horas."}
+              ? "No hay nadie más a quién calificar de esa reta."
+              : "No hay calificaciones abiertas. Se abren al guardar el resultado de una reta y duran 12 horas."}
           </p>
         ) : (
           <>

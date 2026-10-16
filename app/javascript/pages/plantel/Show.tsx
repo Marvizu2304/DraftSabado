@@ -95,8 +95,8 @@ export default function PlantelShow({ player }: { player: PlayerDetail }) {
                 points: toChartPoints(withinRange([player.series], range)[0]),
               },
             ]}
-            label={`Evolución de ${player.name} sábado a sábado`}
-            empty="Todavía no hay sábados con resultado."
+            label={`Evolución de ${player.name} reta a reta`}
+            empty="Todavía no hay retas con resultado."
           />
         </section>
 
@@ -153,7 +153,7 @@ function Elo({ value }: { value: number }) {
 
 function PositionHistory({ history }: { history: Partial<Record<Position, number>> }) {
   const played = POSITIONS.filter((position) => history[position.value])
-  if (played.length === 0) return <span className="text-ink-muted">Todavía no juega un sábado</span>
+  if (played.length === 0) return <span className="text-ink-muted">Todavía no juega una reta</span>
 
   return <>{played.map((p) => `${p.label} ${history[p.value]}`).join(" · ")}</>
 }

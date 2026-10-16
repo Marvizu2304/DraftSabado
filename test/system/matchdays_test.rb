@@ -13,11 +13,11 @@ class MatchdaysTest < ApplicationSystemTestCase
   test "an admin builds a Saturday from the date to the confirmed teams" do
     log_in_as(@admin)
 
-    click_on "Nuevo sábado"
+    click_on "Nueva reta"
     assert_text "La fecha de la jornada"
     # Comes preloaded with the Saturday the group is heading into.
     assert_equal next_saturday.iso8601, find("#played-on").value
-    click_on "Abrir sábado"
+    click_on "Abrir reta"
 
     assert_text "#{next_saturday.day} de"
     assert_text "Palomea quién llegó"
@@ -42,8 +42,8 @@ class MatchdaysTest < ApplicationSystemTestCase
     assert_text "Rojos"
     assert_text "Azules"
 
-    click_on "Confirmar sábado"
-    assert_text "Sábado confirmado."
+    click_on "Confirmar reta"
+    assert_text "Reta confirmada."
     assert_text "Confirmado"
     assert_text "Resultado"
   end
@@ -71,9 +71,9 @@ class MatchdaysTest < ApplicationSystemTestCase
     log_in_as(@admin)
     visit matchday_path(matchday)
 
-    accept_confirm { click_on "Descartar sábado" }
+    accept_confirm { click_on "Descartar reta" }
 
-    assert_text "Sábado borrado."
+    assert_text "Reta borrada."
     assert_nil Matchday.find_by(id: matchday.id)
   end
 
@@ -103,7 +103,7 @@ class MatchdaysTest < ApplicationSystemTestCase
     visit matchday_path(matchday)
 
     click_on "Cambiar fecha"
-    assert_text "Solo puede haber un sábado por fecha"
+    assert_text "Solo puede haber una reta por fecha"
     assert_equal matchday.played_on.iso8601, find("#edit-played-on").value
   end
 
@@ -118,7 +118,7 @@ class MatchdaysTest < ApplicationSystemTestCase
       fill_in "Email", with: user.email
       fill_in "Password", with: "password"
       click_on "Log in"
-      assert_text "Sábados"
+      assert_text "Retas"
     end
 
     # A Saturday with two teams already split, waiting on the review step.

@@ -47,7 +47,7 @@ export default function Settings({
       <AppShell>
         <PageHeader
           title="Ajustes del grupo"
-          description="Cómo se mezclan la técnica y el físico, y cuánto mueven los resultados del sábado."
+          description="Cómo se mezclan la técnica y el físico, y cuánto mueven los resultados de la reta."
         />
 
         {props.flash?.notice && (

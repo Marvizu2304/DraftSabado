@@ -259,7 +259,7 @@ class MatchdaysControllerTest < ActionDispatch::IntegrationTest
       post matchdays_path, params: { played_on: @matchday.played_on.iso8601 }
     end
     assert_redirected_to matchday_path(@matchday)
-    assert_match "ya estaba abierto", flash[:notice]
+    assert_match "ya estaba abierta", flash[:notice]
   end
 
   test "a Saturday still being built can be discarded" do
@@ -296,7 +296,7 @@ class MatchdaysControllerTest < ActionDispatch::IntegrationTest
 
     patch matchday_path(@matchday), params: { played_on: other.played_on.iso8601 }
     assert_equal Date.new(2026, 12, 12), @matchday.reload.played_on
-    assert_match "Ya hay un sábado", flash[:alert]
+    assert_match "Ya hay una reta", flash[:alert]
   end
 
   test "the admin can reopen the rating window and shut it again" do
