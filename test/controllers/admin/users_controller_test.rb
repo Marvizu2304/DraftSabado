@@ -49,6 +49,40 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "admin approves a pending account and activates its player" do
+    log_in_as(@admin)
+    pending = users(:pendiente)
+
+    patch approve_admin_user_path(pending)
+
+    assert_redirected_to admin_users_path
+    assert pending.reload.approved?
+    assert pending.player.active
+  end
+
+  test "admin rejects an account, deactivates its player and kills its sessions" do
+    log_in_as(@admin)
+    pending = users(:pendiente)
+    pending.sessions.create!
+
+    patch reject_admin_user_path(pending)
+
+    assert_redirected_to admin_users_path
+    assert pending.reload.rejected?
+    assert_not pending.player.active
+    assert_empty pending.sessions
+  end
+
+  test "non-admin users cannot approve accounts" do
+    log_in_as(@user)
+    pending = users(:pendiente)
+
+    patch approve_admin_user_path(pending)
+
+    assert_redirected_to root_path
+    assert pending.reload.pending?
+  end
+
   private
     def log_in_as(user)
       post login_path, params: { email: user.email, password: @password }

@@ -30,7 +30,12 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: redirect("/admin/users")
     get "design-system", to: "design_system#show", as: :design_system
-    resources :users, only: %i[ index show ]
+    resources :users, only: %i[ index show ] do
+      member do
+        patch :approve, path: "aprobar"
+        patch :reject,  path: "rechazar"
+      end
+    end
   end
 
   get   "profile",          to: "profiles#details",          as: :profile

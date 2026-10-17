@@ -260,7 +260,9 @@ ActiveRecord::Schema[8.0].define(version: 2026_10_17_120007) do
     t.boolean "admin", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status", default: "pending", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["status"], name: "index_users_on_status"
   end
 
   add_foreign_key "attendances", "matchdays"
