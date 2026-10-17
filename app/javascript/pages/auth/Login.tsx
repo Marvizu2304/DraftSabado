@@ -6,6 +6,9 @@ import { Input } from "@/components/ui/input"
 
 import type { PageProps } from "@/types/inertia"
 
+const DESCRIPTION =
+  "Entra a tu cuenta para ver las retas del grupo, palomear asistencia y calificar a los demás."
+
 export default function Login() {
   const { props } = usePage<PageProps>()
   const form = useForm({ email: "", password: "" })
@@ -19,16 +22,16 @@ export default function Login() {
 
   return (
     <>
-      <Head title="Log in">
-        <meta name="description" content="Log in to your account." />
-        <meta property="og:title" content="Log in" />
-        <meta property="og:description" content="Log in to your account." />
+      <Head title="Entrar">
+        <meta name="description" content={DESCRIPTION} />
+        <meta property="og:title" content="Entrar" />
+        <meta property="og:description" content={DESCRIPTION} />
       </Head>
       <AuthShell>
         <div className="text-center">
-          <h2>Log in</h2>
+          <h2>Entrar</h2>
           <p className="mt-2 text-sm text-ink-muted">
-            Don&apos;t have an account? <Link href="/signup">Sign up</Link>
+            ¿Todavía no tienes cuenta? <Link href="/signup">Pide tu lugar</Link>
           </p>
         </div>
 
@@ -43,7 +46,7 @@ export default function Login() {
 
         <form onSubmit={submit} className="mt-6 space-y-4">
           <div className="space-y-2">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Correo</label>
             <Input
               id="email"
               type="email"
@@ -55,7 +58,7 @@ export default function Login() {
             />
           </div>
           <div className="space-y-2">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Contraseña</label>
             <Input
               id="password"
               type="password"
@@ -67,10 +70,10 @@ export default function Login() {
           </div>
           <div className="flex flex-col items-center gap-3 pt-2 sm:flex-row sm:justify-between">
             <Button type="submit" disabled={form.processing}>
-              Log in
+              Entrar
             </Button>
             <Link href="/passwords/new" className="text-sm">
-              Forgot password?
+              ¿Olvidaste tu contraseña?
             </Link>
           </div>
         </form>

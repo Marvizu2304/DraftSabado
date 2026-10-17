@@ -43,7 +43,7 @@ import {
 import type { PageProps } from "@/types/inertia"
 
 const DESCRIPTION =
-  "El sábado en la cancha: palomea quién llegó, arma equipos parejos, ajústalos a mano y compártelos."
+  "La reta en la cancha: palomea quién llegó, arma equipos parejos, ajústalos a mano y compártelos."
 
 /** Where the Saturday is still being put together. The date is step one and
  *  lives in the dialog that opened it. */
@@ -221,8 +221,8 @@ export default function SabadoShow({
 
   function discard() {
     const warning = scored
-      ? "Borrar este sábado también lo saca del elo de todos. ¿Seguir?"
-      : "¿Descartar este sábado? Se pierde lo armado."
+      ? "Borrar esta reta también la saca del elo de todos. ¿Seguir?"
+      : "¿Descartar esta reta? Se pierde lo armado."
     if (!window.confirm(warning)) return
     router.delete(`/sabados/${matchday.id}`)
   }
@@ -251,7 +251,7 @@ export default function SabadoShow({
     <>
       <Head title={capitalize(title)}>
         <meta name="description" content={DESCRIPTION} />
-        <meta property="og:title" content="El sábado" />
+        <meta property="og:title" content="La reta" />
         <meta property="og:description" content={DESCRIPTION} />
       </Head>
       <AppShell>
@@ -259,7 +259,7 @@ export default function SabadoShow({
           href="/sabados"
           className="mb-4 inline-flex items-center gap-1 text-sm text-ink-muted no-underline hover:text-ink-display"
         >
-          <ArrowLeft className="h-4 w-4" /> Sábados
+          <ArrowLeft className="h-4 w-4" /> Retas
         </Link>
 
         <PageHeader
@@ -322,10 +322,6 @@ export default function SabadoShow({
                 onConfirm={confirm}
               />
             )}
-
-            <Button className="mt-10" variant="ghost" onClick={discard}>
-              <Trash2 className="h-4 w-4" /> Descartar sábado
-            </Button>
           </>
         ) : arrangement.length === 0 ? (
           <Roster roster={roster} checked={checked} />
@@ -368,19 +364,19 @@ export default function SabadoShow({
             >
               <Share2 className="h-4 w-4" /> Compartir por WhatsApp
             </Button>
-
-            {can_edit && (
-              <Manage
-                playedOn={matchday.played_on}
-                ratingsOpen={!!ratings?.open}
-                scored={scored}
-                onRebuild={rebuild}
-                onChangeDate={changeDate}
-                onToggleRatings={toggleRatings}
-                onDelete={discard}
-              />
-            )}
           </>
+        )}
+
+        {can_edit && (
+          <Manage
+            playedOn={matchday.played_on}
+            ratingsOpen={!!ratings?.open}
+            scored={scored}
+            onRebuild={wizard ? undefined : rebuild}
+            onChangeDate={changeDate}
+            onToggleRatings={toggleRatings}
+            onDelete={discard}
+          />
         )}
       </AppShell>
     </>
@@ -433,7 +429,7 @@ function Roster({ roster, checked }: { roster: RosterPlayer[]; checked: number[]
   return (
     <div className="mt-6">
       {present.length === 0 ? (
-        <p className="text-ink-muted">Todavía nadie palomea este sábado.</p>
+        <p className="text-ink-muted">Todavía nadie palomea esta reta.</p>
       ) : (
         <>
           <p>Llegaron {present.length}.</p>
@@ -476,7 +472,7 @@ function Attendance({
   }
 
   return (
-    <div className="mt-6 pb-28">
+    <div className="mt-6">
       <div className="rounded-md border border-hairline bg-surface px-4 py-4">
         <div className="text-3xl font-semibold text-ink-display">{checked.length}</div>
         <p className="mt-0 text-sm text-ink-muted">
@@ -549,7 +545,7 @@ function Distribution({
   )
 
   return (
-    <div className="mt-6 pb-28">
+    <div className="mt-6">
       <div className="rounded-md border border-hairline bg-surface px-4 py-4">
         <fieldset>
           <legend>Distribución</legend>
@@ -603,10 +599,12 @@ function Distribution({
   )
 }
 
+/** The step's own footer: part of the section, but kept in reach while the
+ *  list above it scrolls. */
 function BottomBar({ children }: { children: ReactNode }) {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-20 border-t border-hairline bg-page px-4 py-3">
-      <div className="mx-auto max-w-4xl">{children}</div>
+    <div className="sticky bottom-0 z-20 mt-6 rounded-md border border-hairline bg-page px-4 py-3">
+      {children}
     </div>
   )
 }
@@ -649,7 +647,7 @@ function Teams({
     .find((m) => m.player_id === selected)
 
   return (
-    <div className={cn("mt-6", canEdit && "pb-28")}>
+    <div className="mt-6">
       <div className="flex items-center gap-3 rounded-md border border-hairline bg-surface px-4 py-3">
         <Badge tone={tone}>{result.label}</Badge>
         <span className="text-sm text-ink-muted">
@@ -716,7 +714,7 @@ function Teams({
                   Atrás
                 </Button>
                 <Button className="flex-1" onClick={onConfirm}>
-                  Confirmar sábado
+                  Confirmar reta
                 </Button>
               </div>
             )}
@@ -740,7 +738,8 @@ function Manage({
   playedOn: string
   ratingsOpen: boolean
   scored: boolean
-  onRebuild: () => void
+  /** Absent while the wizard is already open — there is nothing to reopen. */
+  onRebuild?: () => void
   onChangeDate: (date: string) => void
   onToggleRatings: (open: boolean) => void
   onDelete: () => void
@@ -759,9 +758,11 @@ function Manage({
         <Button variant="secondary" onClick={() => { setDate(playedOn); setEditingDate(true) }}>
           <CalendarDays className="h-4 w-4" /> Cambiar fecha
         </Button>
-        <Button variant="secondary" onClick={onRebuild}>
-          <Shuffle className="h-4 w-4" /> Volver a armar
-        </Button>
+        {onRebuild && (
+          <Button variant="secondary" onClick={onRebuild}>
+            <Shuffle className="h-4 w-4" /> Volver a armar
+          </Button>
+        )}
         {scored && (
           <Button variant="secondary" onClick={() => onToggleRatings(!ratingsOpen)}>
             <Star className="h-4 w-4" />
@@ -769,7 +770,7 @@ function Manage({
           </Button>
         )}
         <Button variant="ghost" onClick={onDelete}>
-          <Trash2 className="h-4 w-4" /> Borrar sábado
+          <Trash2 className="h-4 w-4" /> Borrar reta
         </Button>
       </div>
 
@@ -785,7 +786,7 @@ function Manage({
             <DialogHeader>
               <DialogTitle>Cambiar fecha</DialogTitle>
               <DialogDescription>
-                Solo puede haber un sábado por fecha.
+                Solo puede haber una reta por fecha.
               </DialogDescription>
             </DialogHeader>
 
@@ -828,7 +829,7 @@ function Ratings({ ratings }: { ratings: RatingsInfo }) {
           ellos.
         </p>
       ) : (
-        <p className="mt-1 text-sm text-ink-muted">Cerradas. Este sábado ya quedó.</p>
+        <p className="mt-1 text-sm text-ink-muted">Cerradas. Esta reta ya quedó.</p>
       )}
 
       {ratings.pending.length > 0 ? (
@@ -942,7 +943,7 @@ function Result({
           </div>
           <p className="mt-3 text-xs text-ink-muted">
             {scored
-              ? "Borrarlo también cierra las calificaciones y deshace el elo de este sábado."
+              ? "Borrarla también cierra las calificaciones y deshace el elo de esta reta."
               : "Al guardarlo se abren las calificaciones por 12 horas."}
           </p>
         </>

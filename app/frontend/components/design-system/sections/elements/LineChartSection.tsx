@@ -13,7 +13,7 @@ const code = `import { LineChart } from "@/components/ui/line-chart"
 <LineChart series={players.map((p) => ({ label: p.name, points: p.series }))} />
 
 // Nothing to draw yet
-<LineChart series={[]} empty="Todavía no hay sábados con resultado." />`;
+<LineChart series={[]} empty="Todavía no hay retas con resultado." />`;
 
 const DATES = ["2026-08-15", "2026-08-22", "2026-08-29", "2026-09-05", "2026-09-12"];
 
@@ -37,7 +37,7 @@ function Preview() {
         />
       </div>
       <div className="rounded-md border border-hairline bg-page p-4">
-        <LineChart series={[]} empty="Todavía no hay sábados con resultado." />
+        <LineChart series={[]} empty="Todavía no hay retas con resultado." />
       </div>
     </div>
   );

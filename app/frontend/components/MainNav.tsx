@@ -40,7 +40,7 @@ const DEFAULT_NAV_ITEMS: NavItemDef[] = [
   {
     href: "/sabados",
     icon: CalendarDays,
-    label: "Sábados",
+    label: "Retas",
     match: (url) => url === "/" || url.startsWith("/sabados"),
   },
   {

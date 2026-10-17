@@ -33,6 +33,22 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to login_path
   end
 
+  test "rejects a pending account" do
+    assert_no_difference -> { Session.count } do
+      post login_path, params: { email: users(:pendiente).email, password: @password }
+    end
+
+    assert_redirected_to login_path
+  end
+
+  test "rejects a rejected account" do
+    assert_no_difference -> { Session.count } do
+      post login_path, params: { email: users(:rechazado).email, password: @password }
+    end
+
+    assert_redirected_to login_path
+  end
+
   test "rejects an unknown email" do
     assert_no_difference -> { Session.count } do
       post login_path, params: {

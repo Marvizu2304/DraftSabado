@@ -6,13 +6,13 @@ const ADMIN_NAV_ITEMS: NavItemDef[] = [
   {
     href: "/",
     icon: Home,
-    label: "App Home",
+    label: "Volver a la app",
     match: () => false,
   },
   {
     href: "/admin/users",
     icon: Users,
-    label: "Users",
+    label: "Cuentas",
     match: (url) => url.startsWith("/admin/users"),
   },
   {

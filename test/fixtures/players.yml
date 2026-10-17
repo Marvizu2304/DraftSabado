@@ -14,3 +14,10 @@ retirado:
   age: 48
   position: defender
   active: false
+
+solicitante:
+  name: Solicitante
+  age: 24
+  position: forward
+  active: false
+  user: pendiente

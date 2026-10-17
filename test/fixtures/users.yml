@@ -3,12 +3,25 @@
 one:
   email: one@example.com
   password_digest: <%= password_digest %>
+  status: approved
 
 two:
   email: two@example.com
   password_digest: <%= password_digest %>
+  status: approved
 
 admin:
   email: admin@example.com
   password_digest: <%= password_digest %>
   admin: true
+  status: approved
+
+pendiente:
+  email: pendiente@example.com
+  password_digest: <%= password_digest %>
+  status: pending
+
+rechazado:
+  email: rechazado@example.com
+  password_digest: <%= password_digest %>
+  status: rejected

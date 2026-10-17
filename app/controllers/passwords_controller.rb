@@ -11,7 +11,7 @@ class PasswordsController < ApplicationController
       PasswordsMailer.reset(user).deliver_later
     end
 
-    redirect_to login_path, notice: "Password reset instructions sent (if an account with that email exists)."
+    redirect_to login_path, notice: "Si existe una cuenta con ese correo, te mandamos las instrucciones."
   end
 
   def edit
@@ -20,7 +20,7 @@ class PasswordsController < ApplicationController
 
   def update
     if @user.update(params.permit(:password))
-      redirect_to login_path, notice: "Password has been reset. You can sign in now."
+      redirect_to login_path, notice: "Listo, tu contraseña cambió. Ya puedes entrar."
     else
       redirect_to edit_password_path(params[:token]),
                   inertia: { errors: @user.errors.to_hash(true).transform_values(&:first) }
@@ -31,6 +31,6 @@ class PasswordsController < ApplicationController
     def set_user_by_token
       @user = User.find_by_password_reset_token!(params[:token])
     rescue ActiveSupport::MessageVerifier::InvalidSignature
-      redirect_to new_password_path, alert: "Password reset link is invalid or has expired."
+      redirect_to new_password_path, alert: "Ese enlace ya no sirve o expiró."
     end
 end
