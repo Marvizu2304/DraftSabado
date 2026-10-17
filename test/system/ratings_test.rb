@@ -56,9 +56,9 @@ class RatingsTest < ApplicationSystemTestCase
   private
     def log_in_as(user)
       visit login_path
-      fill_in "Email", with: user.email
-      fill_in "Password", with: "password"
-      click_on "Log in"
+      fill_in "Correo", with: user.email
+      fill_in "Contraseña", with: "password"
+      click_on "Entrar"
       assert_text "Retas"
     end
 

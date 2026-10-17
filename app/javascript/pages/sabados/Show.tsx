@@ -322,10 +322,6 @@ export default function SabadoShow({
                 onConfirm={confirm}
               />
             )}
-
-            <Button className="mt-10" variant="ghost" onClick={discard}>
-              <Trash2 className="h-4 w-4" /> Descartar reta
-            </Button>
           </>
         ) : arrangement.length === 0 ? (
           <Roster roster={roster} checked={checked} />
@@ -368,19 +364,19 @@ export default function SabadoShow({
             >
               <Share2 className="h-4 w-4" /> Compartir por WhatsApp
             </Button>
-
-            {can_edit && (
-              <Manage
-                playedOn={matchday.played_on}
-                ratingsOpen={!!ratings?.open}
-                scored={scored}
-                onRebuild={rebuild}
-                onChangeDate={changeDate}
-                onToggleRatings={toggleRatings}
-                onDelete={discard}
-              />
-            )}
           </>
+        )}
+
+        {can_edit && (
+          <Manage
+            playedOn={matchday.played_on}
+            ratingsOpen={!!ratings?.open}
+            scored={scored}
+            onRebuild={wizard ? undefined : rebuild}
+            onChangeDate={changeDate}
+            onToggleRatings={toggleRatings}
+            onDelete={discard}
+          />
         )}
       </AppShell>
     </>
@@ -476,7 +472,7 @@ function Attendance({
   }
 
   return (
-    <div className="mt-6 pb-28">
+    <div className="mt-6">
       <div className="rounded-md border border-hairline bg-surface px-4 py-4">
         <div className="text-3xl font-semibold text-ink-display">{checked.length}</div>
         <p className="mt-0 text-sm text-ink-muted">
@@ -549,7 +545,7 @@ function Distribution({
   )
 
   return (
-    <div className="mt-6 pb-28">
+    <div className="mt-6">
       <div className="rounded-md border border-hairline bg-surface px-4 py-4">
         <fieldset>
           <legend>Distribución</legend>
@@ -603,10 +599,12 @@ function Distribution({
   )
 }
 
+/** The step's own footer: part of the section, but kept in reach while the
+ *  list above it scrolls. */
 function BottomBar({ children }: { children: ReactNode }) {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-20 border-t border-hairline bg-page px-4 py-3">
-      <div className="mx-auto max-w-4xl">{children}</div>
+    <div className="sticky bottom-0 z-20 mt-6 rounded-md border border-hairline bg-page px-4 py-3">
+      {children}
     </div>
   )
 }
@@ -649,7 +647,7 @@ function Teams({
     .find((m) => m.player_id === selected)
 
   return (
-    <div className={cn("mt-6", canEdit && "pb-28")}>
+    <div className="mt-6">
       <div className="flex items-center gap-3 rounded-md border border-hairline bg-surface px-4 py-3">
         <Badge tone={tone}>{result.label}</Badge>
         <span className="text-sm text-ink-muted">
@@ -740,7 +738,8 @@ function Manage({
   playedOn: string
   ratingsOpen: boolean
   scored: boolean
-  onRebuild: () => void
+  /** Absent while the wizard is already open — there is nothing to reopen. */
+  onRebuild?: () => void
   onChangeDate: (date: string) => void
   onToggleRatings: (open: boolean) => void
   onDelete: () => void
@@ -759,9 +758,11 @@ function Manage({
         <Button variant="secondary" onClick={() => { setDate(playedOn); setEditingDate(true) }}>
           <CalendarDays className="h-4 w-4" /> Cambiar fecha
         </Button>
-        <Button variant="secondary" onClick={onRebuild}>
-          <Shuffle className="h-4 w-4" /> Volver a armar
-        </Button>
+        {onRebuild && (
+          <Button variant="secondary" onClick={onRebuild}>
+            <Shuffle className="h-4 w-4" /> Volver a armar
+          </Button>
+        )}
         {scored && (
           <Button variant="secondary" onClick={() => onToggleRatings(!ratingsOpen)}>
             <Star className="h-4 w-4" />

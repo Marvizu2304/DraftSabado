@@ -71,7 +71,12 @@ class MatchdaysTest < ApplicationSystemTestCase
     log_in_as(@admin)
     visit matchday_path(matchday)
 
-    accept_confirm { click_on "Descartar reta" }
+    # The manager is on hand while the Saturday is still being built.
+    assert_text "Gestionar"
+    assert_button "Cambiar fecha"
+    assert_no_button "Volver a armar"
+
+    accept_confirm { click_on "Borrar reta" }
 
     assert_text "Reta borrada."
     assert_nil Matchday.find_by(id: matchday.id)
@@ -115,9 +120,9 @@ class MatchdaysTest < ApplicationSystemTestCase
 
     def log_in_as(user)
       visit login_path
-      fill_in "Email", with: user.email
-      fill_in "Password", with: "password"
-      click_on "Log in"
+      fill_in "Correo", with: user.email
+      fill_in "Contraseña", with: "password"
+      click_on "Entrar"
       assert_text "Retas"
     end
 
